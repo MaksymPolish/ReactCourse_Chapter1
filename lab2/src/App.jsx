@@ -1,35 +1,33 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import './App.css';
+import ToDoTable from './components/ToDoTable';
+import AddToDoComponent from './components/AddToDoComponent';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [toDos, setToDos] = useState([]);
+  const [newToDo, setNewToDo] = useState({ id: '', title: '' });
+
+  function handleNewTitleChange(event) {
+    setNewToDo({ id: new Date().toISOString(), title: event.target.value });
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault(); 
+    if (newToDo.title.trim() === '') return; 
+    setToDos([...toDos, newToDo]);
+    setNewToDo({ id: '', title: '' }); 
+  }
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <AddToDoComponent
+        title={newToDo.title}
+        onTitleChange={handleNewTitleChange}
+        onSubmit={handleSubmit}
+      />
+      <ToDoTable toDos={toDos} />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
