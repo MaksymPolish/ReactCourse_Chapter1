@@ -3,7 +3,7 @@ import './App.css';
 import SearchInput from './components/SearchInput';
 import ToDoTable from './components/ToDoTable';
 import AddToDoComponent from './components/AddToDoComponent';
-
+import PageTitle from './components/PageTitle';
 function App() {
   const [toDos, setToDos] = useState([]);
   const [newToDo, setNewToDo] = useState({ id: '', title: '' });
@@ -34,7 +34,7 @@ function App() {
 
   return (
     <div className="container">
-      <h1>ToDo List</h1>
+      <PageTitle title="MyTask" />
       <SearchInput searchQuery={searchQuery} onSearchChange={handleSearchChange} />
       <AddToDoComponent
         title={newToDo.title}
