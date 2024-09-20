@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
-import ToDoContainer from './components/ToDoContainer';
-import PageTitle from './components/PageTitle';
+import ToDoContainer from './components/ToDo/ToDoContainer';
+import PageTitle from './components/common/PageTitle';
 function App() {
   return (
     <>
