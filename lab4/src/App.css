@@ -126,3 +126,26 @@ input[type="text"]::placeholder {
   color: #999;
 }
 
+.pagination {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+}
+
+.page-item {
+  margin: 0 5px;
+}
+
+.page-link {
+  cursor: pointer;
+  padding: 5px 10px;
+  text-decoration: none;
+  color: black;
+}
+
+.page-item.active .page-link {
+  font-weight: bold;
+  color: white;
+  background-color: #007bff;
+  border-radius: 5px;
+}
