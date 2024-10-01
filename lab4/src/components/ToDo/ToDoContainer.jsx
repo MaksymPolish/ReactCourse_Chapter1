@@ -7,52 +7,51 @@ import Pagination from './pagination'
 import Loading from './Loading'
 
 const ToDoContainer = () => {
-  const { isLoading, data, error: fetchError } = useGetAllToDo() // Custom hook
-  const [toDos, setToDos] = useState([])
+  // Custom hook
+  const { isLoading, data : toDos, setData: setToDos , error: fetchError } = useGetAllToDo()
+  //States
   const [newToDo, setNewToDo] = useState({ id: '', title: '' })
   const [searchQuery, setSearchQuery] = useState('')
   const [error, setError] = useState(null) // Error state for form validation
   const [currentPage, setCurrentPage] = useState(1)
   const [toDosPerPage] = useState(10)
 
-  useEffect(() =>{
-    if (data){
-      setToDos(data) // Initialize toDos state with fetched data
-    }
-  }, [data]) // eslint-disable-line react-hooks/exhaustive-deps 
-
+  //New Title Change
   function handleNewTitleChange(event) {
     setNewToDo({ id: new Date().toISOString(), title: event.target.value })
     setError(null)
   }
 
+  //Add to-do function
   function handleSubmit(event) {
-    event.preventDefault()
+    event.preventDefault();
     if (newToDo.title.trim() === '') {
-      setError('Task title cannot be empty')
-      return
+      setError('Task title cannot be empty');
+      return;
     }
-    setToDos(prevToDos => [...prevToDos, newToDo]) // Append new ToDos 
-    setNewToDo({ id: '', title: '' })
-    setError(null)
+    setToDos((prevToDos) => [...prevToDos, newToDo]);
+    setNewToDo({ id: '', title: '' });
+    setError(null);
   }
 
+  //Remove
   function handleRemove(id) {
     if (id !== null && id !== undefined) {
       setToDos((prevToDos) => prevToDos.filter((toDo) => toDo.id !== id)) //Remove to-do by id
     }
   }
 
+  //Search Change
   function handleSearchChange(event) {
     setSearchQuery(event.target.value)
   }
 
+  //Pagination
   const paginate = (pageNumber) => setCurrentPage(pageNumber)
-
 
   const filteredToDos = toDos.filter((toDo) =>
     toDo.title.toLowerCase().includes(searchQuery.toLowerCase())
-  )
+  );
 
   const indexOfLastToDo = currentPage * toDosPerPage
   const indexOfFirstToDo = indexOfLastToDo - toDosPerPage
