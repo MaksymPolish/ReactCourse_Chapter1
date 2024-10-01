@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ToDoTable from './ToDoTable'
 import SearchInput from './SearchInput'
 import AddToDoComponent from './AddToDoComponent'
@@ -15,6 +15,12 @@ const ToDoContainer = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [toDosPerPage] = useState(10)
 
+  useEffect(() =>{
+    if (data){
+      setToDos(data) // Initialize toDos state with fetched data
+    }
+  }, [data]) // eslint-disable-line react-hooks/exhaustive-deps 
+
   function handleNewTitleChange(event) {
     setNewToDo({ id: new Date().toISOString(), title: event.target.value })
     setError(null)
@@ -26,14 +32,14 @@ const ToDoContainer = () => {
       setError('Task title cannot be empty')
       return
     }
-    setToDos([...toDos, newToDo])
+    setToDos(prevToDos => [...prevToDos, newToDo]) // Append new ToDos 
     setNewToDo({ id: '', title: '' })
     setError(null)
   }
 
   function handleRemove(id) {
     if (id !== null && id !== undefined) {
-      setToDos(toDos.filter((toDo) => toDo.id !== id))
+      setToDos((prevToDos) => prevToDos.filter((toDo) => toDo.id !== id)) //Remove to-do by id
     }
   }
 
@@ -43,18 +49,14 @@ const ToDoContainer = () => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber)
 
+
   const filteredToDos = toDos.filter((toDo) =>
     toDo.title.toLowerCase().includes(searchQuery.toLowerCase())
   )
 
-  const allToDos = [...data, ...toDos]
-
   const indexOfLastToDo = currentPage * toDosPerPage
   const indexOfFirstToDo = indexOfLastToDo - toDosPerPage
-  const currentToDos = (filteredToDos.length ? filteredToDos : allToDos).slice(
-    indexOfFirstToDo,
-    indexOfLastToDo
-  )
+  const currentToDos = filteredToDos.slice(indexOfFirstToDo, indexOfLastToDo)
 
   return (
     <div className="container">
@@ -71,15 +73,13 @@ const ToDoContainer = () => {
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {fetchError && <p style={{ color: 'red' }}>{fetchError}</p>}
       {isLoading ? (
-        <Loading /> // Use the new Loading component here
+        <Loading />
       ) : (
         <>
           <ToDoTable toDos={currentToDos} onRemove={handleRemove} />
           <Pagination
             toDosPerPage={toDosPerPage}
-            totalToDos={
-              filteredToDos.length ? filteredToDos.length : allToDos.length
-            }
+            totalToDos={filteredToDos.length}
             paginate={paginate}
             currentPage={currentPage}
           />

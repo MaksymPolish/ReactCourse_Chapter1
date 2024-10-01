@@ -20,14 +20,15 @@ const Pagination = ({ toDosPerPage, totalToDos, paginate, currentPage }) => {
             className={`page-item ${currentPage === number ? 'active' : ''}`}
             style={{ margin: '0 5px' }}
           >
-            <a
+            <button
               onClick={() => paginate(number)}
-              href="!#"
-              className="page-link"
+              className={`pagination-button ${
+                currentPage === number ? 'active' : ''
+              }`} // Use `number` instead of `pageNumber`
               style={{ cursor: 'pointer', padding: '5px 10px' }}
             >
               {number}
-            </a>
+            </button>
           </li>
         ))}
       </ul>
