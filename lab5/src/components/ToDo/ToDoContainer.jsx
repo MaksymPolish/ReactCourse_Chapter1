@@ -4,11 +4,15 @@ import SearchInput from './SearchInput'
 import AddToDoComponent from './AddToDoComponent'
 import useGetAllToDo from '../CustomHooks/useGetAllToDo'
 import Pagination from './pagination'
-import Loading from './Loading'
-
+import Loader from '../common/Loader'
 const ToDoContainer = () => {
   // Custom hook
-  const {isLoading, data: toDos, setData: setToDos, error: fetchError,} = useGetAllToDo()
+  const {
+    isLoading,
+    data: toDos,
+    setData: setToDos,
+    error: fetchError,
+  } = useGetAllToDo()
   //States
   const [newToDo, setNewToDo] = useState({ id: '', title: '' })
   const [searchQuery, setSearchQuery] = useState('')
@@ -41,6 +45,9 @@ const ToDoContainer = () => {
     }
   }
 
+  const filteredToDos = toDos.filter((toDo) =>
+    toDo.title.toLowerCase().includes(searchQuery.toLowerCase())
+  )
   //Search Change
   function handleSearchChange(event) {
     setSearchQuery(event.target.value)
@@ -53,9 +60,6 @@ const ToDoContainer = () => {
   const currentToDos = filteredToDos.slice(indexOfFirstToDo, indexOfLastToDo)
 
   //Filter
-  const filteredToDos = toDos.filter((toDo) =>
-    toDo.title.toLowerCase().includes(searchQuery.toLowerCase())
-  )
 
   return (
     <div className="container">
@@ -71,9 +75,8 @@ const ToDoContainer = () => {
 
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {fetchError && <p style={{ color: 'red' }}>{fetchError}</p>}
-      {isLoading ? (
-        <Loading />
-      ) : (
+      {/* The loader is centered using Flexbox in the Loader.css */}
+      <Loader isLoading={isLoading}>
         <>
           <ToDoTable toDos={currentToDos} onRemove={handleRemove} />
           <Pagination
@@ -83,7 +86,7 @@ const ToDoContainer = () => {
             currentPage={currentPage}
           />
         </>
-      )}
+      </Loader>
     </div>
   )
 }

@@ -137,6 +137,19 @@ input[type="text"]::placeholder {
 }
 
 
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; 
+}
+
+.loader-main {
+  font-size: 24px;
+  font-weight: bold;
+  
+}
+
 .pagination-button {
   background-color: white; 
   color: black; 
