@@ -8,7 +8,7 @@ import Loading from './Loading'
 
 const ToDoContainer = () => {
   // Custom hook
-  const { isLoading, data : toDos, setData: setToDos , error: fetchError } = useGetAllToDo()
+  const {isLoading, data: toDos, setData: setToDos, error: fetchError,} = useGetAllToDo()
   //States
   const [newToDo, setNewToDo] = useState({ id: '', title: '' })
   const [searchQuery, setSearchQuery] = useState('')
@@ -24,14 +24,14 @@ const ToDoContainer = () => {
 
   //Add to-do function
   function handleSubmit(event) {
-    event.preventDefault();
+    event.preventDefault()
     if (newToDo.title.trim() === '') {
-      setError('Task title cannot be empty');
-      return;
+      setError('Task title cannot be empty')
+      return
     }
-    setToDos((prevToDos) => [...prevToDos, newToDo]);
-    setNewToDo({ id: '', title: '' });
-    setError(null);
+    setToDos((prevToDos) => [...prevToDos, newToDo])
+    setNewToDo({ id: '', title: '' })
+    setError(null)
   }
 
   //Remove
@@ -48,14 +48,14 @@ const ToDoContainer = () => {
 
   //Pagination
   const paginate = (pageNumber) => setCurrentPage(pageNumber)
-
-  const filteredToDos = toDos.filter((toDo) =>
-    toDo.title.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
   const indexOfLastToDo = currentPage * toDosPerPage
   const indexOfFirstToDo = indexOfLastToDo - toDosPerPage
   const currentToDos = filteredToDos.slice(indexOfFirstToDo, indexOfLastToDo)
+
+  //Filter
+  const filteredToDos = toDos.filter((toDo) =>
+    toDo.title.toLowerCase().includes(searchQuery.toLowerCase())
+  )
 
   return (
     <div className="container">
