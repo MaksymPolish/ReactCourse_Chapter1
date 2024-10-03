@@ -130,6 +130,7 @@ input[type="text"]::placeholder {
   display: flex;
   list-style-type: none;
   padding: 0;
+  overflow-y: auto;
 }
 
 .page-item {

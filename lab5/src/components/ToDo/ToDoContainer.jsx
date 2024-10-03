@@ -4,7 +4,20 @@ import SearchInput from './SearchInput'
 import AddToDoComponent from './AddToDoComponent'
 import useGetAllToDo from '../CustomHooks/useGetAllToDo'
 import Pagination from './pagination'
-import Loader from '../common/Loader'
+
+const Loader = ({ isLoading, children }) => {
+  return (
+    <>
+      {isLoading && (
+        <div className="loader-container">
+          <div className="loader-main">Loading...</div>
+        </div>
+      )}
+      {children}
+    </>
+  )
+}
+
 const ToDoContainer = () => {
   // Custom hook
   const {
@@ -45,6 +58,7 @@ const ToDoContainer = () => {
     }
   }
 
+  //Filter
   const filteredToDos = toDos.filter((toDo) =>
     toDo.title.toLowerCase().includes(searchQuery.toLowerCase())
   )
@@ -59,8 +73,6 @@ const ToDoContainer = () => {
   const indexOfFirstToDo = indexOfLastToDo - toDosPerPage
   const currentToDos = filteredToDos.slice(indexOfFirstToDo, indexOfLastToDo)
 
-  //Filter
-
   return (
     <div className="container">
       <SearchInput
@@ -72,10 +84,8 @@ const ToDoContainer = () => {
         onTitleChange={handleNewTitleChange}
         onSubmit={handleSubmit}
       />
-
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {fetchError && <p style={{ color: 'red' }}>{fetchError}</p>}
-      {/* The loader is centered using Flexbox in the Loader.css */}
       <Loader isLoading={isLoading}>
         <>
           <ToDoTable toDos={currentToDos} onRemove={handleRemove} />
