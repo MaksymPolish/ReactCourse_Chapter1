@@ -4,7 +4,6 @@ import SearchInput from './SearchInput'
 import AddToDoComponent from './AddToDoComponent'
 import useGetAllToDo from '../CustomHooks/useGetAllToDo'
 import Pagination from './pagination'
-
 const Loader = ({ isLoading, children }) => {
   return (
     <>
@@ -58,6 +57,15 @@ const ToDoContainer = () => {
     }
   }
 
+  //Editing
+  const handleUpdate = (id, newTitle) => {
+    setToDos((prevToDos) =>
+      prevToDos.map((toDo) =>
+        toDo.id === id ? { ...toDo, title: newTitle } : toDo
+      )
+    )
+  }
+
   //Filter
   const filteredToDos = toDos.filter((toDo) =>
     toDo.title.toLowerCase().includes(searchQuery.toLowerCase())
@@ -74,7 +82,7 @@ const ToDoContainer = () => {
   const currentToDos = filteredToDos.slice(indexOfFirstToDo, indexOfLastToDo)
 
   return (
-    <div className="container">
+    <div>
       <SearchInput
         searchQuery={searchQuery}
         onSearchChange={handleSearchChange}
@@ -88,7 +96,11 @@ const ToDoContainer = () => {
       {fetchError && <p style={{ color: 'red' }}>{fetchError}</p>}
       <Loader isLoading={isLoading}>
         <>
-          <ToDoTable toDos={currentToDos} onRemove={handleRemove} />
+          <ToDoTable
+            toDos={currentToDos}
+            onRemove={handleRemove}
+            onUpdate={handleUpdate}
+          />
           <Pagination
             toDosPerPage={toDosPerPage}
             totalToDos={filteredToDos.length}

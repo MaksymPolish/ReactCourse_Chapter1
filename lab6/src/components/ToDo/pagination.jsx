@@ -1,5 +1,4 @@
 import React from 'react';
-
 const Pagination = ({ toDosPerPage, totalToDos, paginate, currentPage }) => {
   const pageNumbers = [];
 

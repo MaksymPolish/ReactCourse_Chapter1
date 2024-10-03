@@ -1,14 +1,16 @@
-import React from 'react';
-import './App.css';
-import ToDoContainer from './components/ToDo/ToDoContainer';
-import PageTitle from './components/common/PageTitle';
+import React from 'react'
+import './App.css'
+import ToDoContainer from './components/ToDo/ToDoContainer'
+import PageTitle from './components/common/PageTitle'
 function App() {
   return (
     <>
-    <PageTitle title="MyTask" />
-    <ToDoContainer />
+      <div className="container">
+        <PageTitle title="MyTask" />
+        <ToDoContainer />
+      </div>
     </>
-  );
+  )
 }
 
-export default App;
+export default App

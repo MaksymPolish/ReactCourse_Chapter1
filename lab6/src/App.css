@@ -52,15 +52,6 @@ body {
   height: 100vh;
 }
 
-.container {
-  background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  max-width: 600px;
-  width: 100%;
-}
-
 h1 {
   text-align: center;
   color: #333;
@@ -157,7 +148,8 @@ input[type="text"]::placeholder {
   border: 1px solid #ddd;
   padding: 8px 12px;
   margin: 0 5px;
-  cursor: pointer;
+  cursor: pointer; 
+  display: inline-flex; 
 }
 
 .pagination-button:hover {
@@ -168,4 +160,42 @@ input[type="text"]::placeholder {
   background-color: black; 
   color: white; 
   border-color: black;
+}
+
+.remove-button {
+  background-color: #ff4d4d; 
+  color: white; 
+  border: none; 
+  border-radius: 5px; 
+  padding: 8px 12px; 
+  cursor: pointer; 
+  transition: background-color 0.3s ease, transform 0.2s ease; 
+}
+
+.remove-button:hover {
+  background-color: #cc0000; 
+  transform: scale(1.05); 
+}
+
+.edit-button {
+  background-color: #007bff; 
+  color: white;
+  border: none; 
+  border-radius: 5px; 
+  padding: 8px 12px; 
+  cursor: pointer; 
+  transition: background-color 0.3s ease, transform 0.2s ease; 
+}
+
+.edit-button:hover {
+  background-color: #0056b3; 
+  transform: scale(1.05); 
+}
+
+.container{
+  background-color: white;
+  max-width: 750px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  margin: 20px auto;
 }
